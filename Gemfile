@@ -15,6 +15,7 @@ gem 'sass-rails', '>= 6'
 gem 'webpacker'
 gem 'react-rails'
 gem 'bootstrap'
+gem 'safe_random', '~> 0.0.6'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
