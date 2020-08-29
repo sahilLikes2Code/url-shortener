@@ -10,11 +10,12 @@ class DisplayUrl extends Component {
   }
 
   increaseClickCount = async (url) => {
+    console.log('clickc')
 
     try {
       const response = await axios.put(Routes.url_path(url), {url: url}
       )
-      console.log(response)
+      console.log("response", response)
     } catch (error) {
       console.error(error);
     }
@@ -39,9 +40,9 @@ class DisplayUrl extends Component {
               <div><a
                 onClick={() => this.increaseClickCount(url.shortened)}
                 className='pl-5 text-dark'
-                href={`https:myherokuapp.com/${url.shortened}`}
+                href={`${Routes.hostname()}urls/${url.shortened}`}
                 target='_blank'
-              >{`https:myherokuapp.com/${url.shortened}`}</a>
+              >{`${Routes.hostname()}${url.shortened}`}</a>
               </div>
               <div>
                 {url.click_count}

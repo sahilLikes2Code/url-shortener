@@ -26,8 +26,15 @@ class UrlsController < ApplicationController
   def update
     @url = Url.find_by_shortened(params[:url])
     @url.click_count = @url.click_count + 1
+    @url.save
   end
 
+  def show
+    url = Url.find_by_shortened(params[:id])
+    if url
+      redirect_to url.original
+    end
+  end
 
   private
 
