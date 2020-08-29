@@ -1,17 +1,16 @@
 class UrlsController < ApplicationController
 
+  skip_before_action :verify_authenticity_token
 
   def index
     @urls = Url.all
-    # render
+    if @urls
+      render status: :ok, json: {notice: 'Polls list', urls: @urls}
+    else
+      render status: :unprocessable_entity, json: {errors: ['nothing found']}
+    end
   end
 
-
-  def show
-    @urls = Url.all
-    # render 'show'
-    # render status: :ok, json: {urls: @urls}
-  end
 
   def create
     @url = Url.new(url_params)
@@ -22,6 +21,11 @@ class UrlsController < ApplicationController
     else
       render status: :unprocessable_entity, json: {errors: ['Please enter valid url with http or https prefix']}
     end
+  end
+
+  def update
+    @url = Url.find_by_shortened(params[:url])
+    @url.click_count = @url.click_count + 1
   end
 
 

@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_28_104148) do
+ActiveRecord::Schema.define(version: 2020_08_28_161739) do
 
   create_table "urls", force: :cascade do |t|
     t.text "original"
     t.text "shortened"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "click_count", default: 0
   end
 
 end

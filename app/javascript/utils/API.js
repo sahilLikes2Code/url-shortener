@@ -1,9 +1,9 @@
-import { isUnauthorized } from "./helpers";
+import {isUnauthorized} from "./helpers";
 import {
-  STATUS_UNPROCESSABLE_ENTITY,
-  STATUS_OK,
-  STATUS_NOT_FOUND,
   STATUS_BAD_REQUEST,
+  STATUS_NOT_FOUND,
+  STATUS_OK,
+  STATUS_UNPROCESSABLE_ENTITY,
 } from "./constants";
 
 export const fetchApi = ({
@@ -32,24 +32,28 @@ export const fetchApi = ({
   }
 
   fetch(url, options)
-    .then((response) =>
-      response.json().then((data) => {
-        if (isUnauthorized(response)) {
-          onError({ messages: [data.errors], type: "danger" });
-        } else if (response.status == STATUS_UNPROCESSABLE_ENTITY) {
-          onError({ messages: data.errors, type: "danger" });
-        } else if (
-          response.status >= STATUS_OK &&
-          response.status < STATUS_BAD_REQUEST
-        ) {
-          onSuccess({ messages: [data.notice], type: "success" });
-          successCallBack(data);
-        } else if (response.status == STATUS_NOT_FOUND) {
-          onError({ messages: [data.errors], type: "danger" });
-        } else {
-          throw Error(response.statusText);
-        }
-      })
+  console.log('url in fetch:', url)
+  console.log('options in fetch:', options)
+    .then(
+      console.log('then response in fetch:', response),
+      (response) =>
+        response.json().then((data) => {
+          if (isUnauthorized(response)) {
+            onError({messages: [data.errors], type: "danger"});
+          } else if (response.status == STATUS_UNPROCESSABLE_ENTITY) {
+            onError({messages: data.errors, type: "danger"});
+          } else if (
+            response.status >= STATUS_OK &&
+            response.status < STATUS_BAD_REQUEST
+          ) {
+            onSuccess({messages: [data.notice], type: "success"});
+            successCallBack(data);
+          } else if (response.status == STATUS_NOT_FOUND) {
+            onError({messages: [data.errors], type: "danger"});
+          } else {
+            throw Error(response.statusText);
+          }
+        })
     )
     .catch((error) => {
       console.error(error);

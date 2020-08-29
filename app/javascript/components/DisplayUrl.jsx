@@ -1,38 +1,59 @@
 import React, {Component} from 'react';
+import * as Routes from "../utils/Routes";
+import {fetchApi} from "../utils/API";
+import axios from 'axios'
+
 
 class DisplayUrl extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-  // componentDidMount() {
-  //   fetchApi({
-  //     url: Routes.url_path(),
-  //     method: "GET",
-  //     // body: {
-  //     //   url: this.state.url,
-  //     // },
-  //     onError: () => {
-  //       this.setState({
-  //         errors: ['Invalid credentials, Please try again'],
-  //         type: 'danger',
-  //       });
-  //       // window.location.href = Routes.login_path()
-  //       // setTimeout(function (){window.location.href = Routes.login_path();}, 2000)
-  //     },
-  //     onSuccess: (response) => {
-  //       this.setState({message: response.messages});
-  //     },
-  //     successCallBack: () => {
-  //       // window.location.href = Routes.polls_path()
-  //     }
-  //   })
-  // }
+  increaseClickCount = async (url) => {
+
+    try {
+      const response = await axios.put(Routes.url_path(url), {url: url}
+      )
+      console.log(response)
+    } catch (error) {
+      console.error(error);
+    }
+    this.props.fetchListOfUrls()
+  }
+
 
   render() {
-
+    const urls = this.props.urls
     return (
-      <div>
-        I will display urls here
-      </div>
-    );
+      <ul className='list-unstyled'>
+        {urls && urls.map(url => {
+          return (
+            <li key={url.id}
+                className='d-flex justify-content-between bg-white py-2'>
+              <div>
+                <button>📌</button>
+              </div>
+              <div><a className='text-dark'
+                      href={url.original} target="_blank">{url.original}</a>
+              </div>
+              <div><a
+                onClick={() => this.increaseClickCount(url.shortened)}
+                className='pl-5 text-dark'
+                href={`https:myherokuapp.com/${url.shortened}`}
+                target='_blank'
+              >{`https:myherokuapp.com/${url.shortened}`}</a>
+              </div>
+              <div>
+                {url.click_count}
+              </div>
+
+
+            </li>
+          )
+        })}
+      </ul>
+    )
+      ;
   }
 }
 

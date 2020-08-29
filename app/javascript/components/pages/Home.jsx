@@ -1,108 +1,118 @@
 import React from "react"
 import '../../../assets/stylesheets/application.css'
-import {fetchApi} from "../../utils/API";
+import {fetchApi} from '../../utils/API';
 import * as Routes from "../../utils/Routes";
 import DisplayUrl from "../DisplayUrl";
+import axios from 'axios'
 
 class Home extends React.Component {
+
 
   constructor(props) {
     super(props);
     this.state = {
       url: {
         original: ""
-      }
+      },
+      arrayOfUrls: [],
+      message: ''
     }
   }
 
+
   handleChange = ({target: {name, value}}) => {
-    // user: {...this.state.user, [name]: value},
-    // ...this.state, [name]: value
     this.setState({
       url: {...this.state.url, [name]: value}
     });
   };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    fetchApi({
-      url: Routes.url_path(),
-      method: "POST",
-      body: {
-        url: this.state.url,
-      },
-      onError: () => {
-        this.setState({
-          errors: ['Invalid credentials, Please try again'],
-          type: 'danger',
-        });
-        // window.location.href = Routes.login_path()
-        // setTimeout(function (){window.location.href = Routes.login_path();}, 2000)
-      },
-      onSuccess: (response) => {
-        this.setState({message: response.messages});
-      },
-      successCallBack: () => {
-        // window.location.href = Routes.polls_path()
-      },
-    });
-  };
 
-  componentDidMount() {
-    fetchApi({
-      url: Routes.url_path(),
-      method: "GET",
-      // body: {
-      //   url: this.state.url,
-      // },
-      onError: () => {
-        this.setState({
-          errors: ['Invalid credentials, Please try again'],
-          type: 'danger',
-        });
-        // window.location.href = Routes.login_path()
-        // setTimeout(function (){window.location.href = Routes.login_path();}, 2000)
-      },
-      onSuccess: (response) => {
-        console.log(response)
-        console.log('ressspspfdsf')
-        this.setState({message: response.messages});
-      },
-      successCallBack: () => {
-        // window.location.href = Routes.polls_path()
-      }
-    })
+  handleSubmit = async (event) => {
+    event.preventDefault()
+    try {
+      const response = await axios.post(Routes.urls_path(), this.state)
+      ;
+      const urlzArray = (JSON.parse(response.config.data).arrayOfUrls)
+      this.setState({
+        ...this.state, arrayOfUrls: urlzArray
+      })
+    } catch (error) {
+      this.setState({
+        ...this.state, errors: response.data.urls
+      })
+      console.error(error);
+    }
+
+    await this.fetchListOfUrls()
+    document.getElementById("createUrlForm").reset();
+
   }
 
+  fetchListOfUrls = async () => {
+    try {
+      const response = await axios.get(Routes.urls_path());
+      this.setState({
+        ...this.state, arrayOfUrls: response.data.urls
+      })
+    } catch (error) {
+      this.setState({
+        ...this.state, errors: response.data.urls
+      })
+      console.error(error);
+    }
+  }
+
+
+  componentDidMount() {
+    this.fetchListOfUrls()
+  }
+
+
   render() {
-    console.log(this.props)
+    // console.log('props', this.props)
     return (
       <React.Fragment>
-        {/*navbar*/}
-        <nav className='bg-light'>
-          <div className='wrapper py-2'>
-            <h1>Url Muncher</h1>
+        <div className='bg-secondary h1000'>
+
+          {/*navbar*/}
+          <nav className='bg-white'>
+            <div className='wrapper py-2'>
+              <h1>Sahil</h1>
+            </div>
+          </nav>
+
+          {/*test message*/}
+
+          <h1>{this.state.message}</h1>
+          {/*  search bar*/}
+          <section>
+            <div className='wrapper py-3'>
+              <form id='createUrlForm' onSubmit={this.handleSubmit}>
+                <input type='text'
+                       name='original'
+                       id='original'
+                       className='w-75'
+                       placeholder='Enter a URL to shorten'
+                       onChange={this.handleChange}/>
+                <button className='w-25 bg-success'>Submit
+                </button>
+              </form>
+            </div>
+          </section>
+
+          {/*  Display shortened links*/}
+          <div className='wrapper '>
+            <div
+              className='bg-success d-flex justify-content-around align-items-center text-white py-3 mt-3'>
+              <p className='my-0'>Original</p>
+              <p className='my-0'>Shortened</p>
+              {/*<p>Munched</p>*/}
+            </div>
+            <DisplayUrl urls={this.state.arrayOfUrls}
+                        fetchListOfUrls={this.fetchListOfUrls}/>
           </div>
-        </nav>
-
-        {/*  search bar*/}
-        <section>
-          <div className='wrapper py-3'>
-            <form onSubmit={this.handleSubmit}>
-              <input type='text'
-                     name='original'
-                     id='original'
-                     className='w-75'
-                     placeholder='Enter a URL to shorten'
-                     onChange={this.handleChange}/>
-              <button className='w-25'>Submit</button>
-            </form>
-          </div>
-        </section>
-
-        {/*  Display shortened links*/}
-        <DisplayUrl/>
-
+        </div>
+        <button>Click me</button>
       </React.Fragment>
     );
   }
