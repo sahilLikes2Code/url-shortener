@@ -1,6 +1,5 @@
 import React from "react"
 import '../../../assets/stylesheets/application.css'
-import {fetchApi} from '../../utils/API';
 import * as Routes from "../../utils/Routes";
 import DisplayUrl from "../DisplayUrl";
 import axios from 'axios'
@@ -15,10 +14,10 @@ class Home extends React.Component {
         original: ""
       },
       arrayOfUrls: [],
-      message: ''
+      message: '',
+      error: ''
     }
   }
-
 
   handleChange = ({target: {name, value}}) => {
     this.setState({
@@ -30,20 +29,28 @@ class Home extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault()
     try {
-      const response = await axios.post(Routes.urls_path(), this.state)
-      ;
-      const urlzArray = (JSON.parse(response.config.data).arrayOfUrls)
+      const response = await axios.post(Routes.urls_path(), this.state);
+      const message = response.data.notice
+      const urlsArray = (JSON.parse(response.config.data).arrayOfUrls)
+
+      console.log('urlz array', urlsArray)
       this.setState({
-        ...this.state, arrayOfUrls: urlzArray
+        ...this.state,
+        arrayOfUrls: urlsArray,
+        error: '',
+        message: message
       })
     } catch (error) {
+      const errorMessage = (error.response.request.responseText.split(':')[1]).replace(/["}]/g, '')
+
       this.setState({
-        ...this.state, errors: response.data.urls
+        ...this.state,
+        error: errorMessage
       })
-      console.error(error);
     }
 
     await this.fetchListOfUrls()
+
     document.getElementById("createUrlForm").reset();
 
   }
@@ -81,10 +88,6 @@ class Home extends React.Component {
               <h1>Url Muncher</h1>
             </div>
           </nav>
-
-          {/*test message*/}
-
-          <h1>{this.state.message}</h1>
           {/*  search bar*/}
           <section>
             <div className='wrapper py-3'>
@@ -101,6 +104,10 @@ class Home extends React.Component {
             </div>
           </section>
 
+          {/*Success message display*/}
+          <h3
+            className='text-white'>{this.state.message}</h3>{/*Error message display*/}
+          <h3 className='text-white'>{this.state.error}</h3>
           {/*  Display shortened links*/}
           <div className='wrapper '>
             <div

@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import * as Routes from "../utils/Routes";
-// import {fetchApi} from "../utils/API";
 import axios from 'axios'
 
 import thumbtack from '../../assets/images/thumbtack-solid.svg'
 import thumbtackPink from '../../assets/images/thumbtack-pink.svg'
-
 
 class DisplayUrl extends Component {
   constructor(props) {
@@ -68,8 +66,6 @@ class DisplayUrl extends Component {
                   {url.click_count}
                 </p>
               </div>
-
-
             </li>
           )
         })}

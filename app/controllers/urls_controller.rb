@@ -12,32 +12,31 @@ class UrlsController < ApplicationController
   end
 
   def create
+    #check if url already exists
+    if url_already_exists?
+      render status: :found, json: {errors: 'Shortened url already in list'}
+      return
+    end
+
+    #create, if url record doesnt exist
     @url = Url.new(url_params)
     random_string = SafeRandom.alphanumeric(5)
     @url[:shortened] = random_string
+
     if @url.save
-      render status: :ok, json: {notice: 'Url successfully shortened'}
+      render status: :ok, json: {notice: 'Url shortened successfully'}
     else
-      render status: :unprocessable_entity, json: {errors: ['Please enter valid url with http or https prefix']}
+      render status: :unprocessable_entity, json: {errors: 'Please enter valid url with http/https prefix'}
     end
   end
 
-  # def update
-  #   puts params
-  #   @url = Url.find_by_shortened(params[:url])
-  #   @url.click_count = @url.click_count + 1
-  #   @url.save
-  # end
-
   def increase_click_count
-    puts 'in click count'
     @url = Url.find_by_shortened(params[:url])
     @url.click_count = @url.click_count + 1
     @url.save
   end
 
   def pin_url
-    puts 'in pin url'
     @url = Url.find_by_shortened(params[:url])
     @url.pinned = @url.pinned == false
     @url.save
