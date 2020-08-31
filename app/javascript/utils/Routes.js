@@ -7,8 +7,8 @@ export function urls_path() {
 }
 
 export function hostname() {
-  // return 'https://sal-kap-url-muncher.herokuapp.com/'
-  return 'http://localhost:3000/'
+  return 'https://sal-kap-url-muncher.herokuapp.com/'
+  // return 'http://localhost:3000/'
 }
 
 export function url_path(id) {
