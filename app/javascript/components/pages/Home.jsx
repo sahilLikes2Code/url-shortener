@@ -69,7 +69,7 @@ class Home extends React.Component {
 
 
   render() {
-    // console.log('props', this.props)
+    console.log('props', this.props)
     return (
       <React.Fragment>
         {/*<div className='bg-secondary mh-800 pb-5'>*/}

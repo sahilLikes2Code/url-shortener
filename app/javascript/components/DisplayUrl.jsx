@@ -4,7 +4,7 @@ import * as Routes from "../utils/Routes";
 import axios from 'axios'
 
 import thumbtack from '../../assets/images/thumbtack-solid.svg'
-import thumbtackGreen from '../../assets/images/thumbtack-green.svg'
+import thumbtackPink from '../../assets/images/thumbtack-pink.svg'
 
 
 class DisplayUrl extends Component {
@@ -48,7 +48,7 @@ class DisplayUrl extends Component {
                 className='d-flex justify-content-between bg-navy-blue py-2 border-bottom border-dark '>
               <div className='w-7'>
                 <img onClick={() => this.pinUrl(url.shortened)}
-                     src={url.pinned ? thumbtackGreen : thumbtack}
+                     src={url.pinned ? thumbtackPink : thumbtack}
                      style={thumbtackStyle}/>
               </div>
               <div className='w-40'><
