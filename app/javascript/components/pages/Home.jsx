@@ -33,7 +33,6 @@ class Home extends React.Component {
       const message = response.data.notice
       const urlsArray = (JSON.parse(response.config.data).arrayOfUrls)
 
-      console.log('urlz array', urlsArray)
       this.setState({
         ...this.state,
         arrayOfUrls: urlsArray,
@@ -58,11 +57,13 @@ class Home extends React.Component {
   fetchListOfUrls = async () => {
     try {
       const response = await axios.get(Routes.urls_path());
+
       this.setState({
         ...this.state, arrayOfUrls: response.data.urls
       })
     } catch (error) {
       this.setState({
+
         ...this.state, errors: response.data.urls
       })
       console.error(error);
@@ -76,10 +77,8 @@ class Home extends React.Component {
 
 
   render() {
-    console.log('props', this.props)
     return (
       <React.Fragment>
-        {/*<div className='bg-secondary mh-800 pb-5'>*/}
         <div className='pb-5'>
 
           {/*navbar*/}
@@ -88,6 +87,7 @@ class Home extends React.Component {
               <h1>Url Muncher</h1>
             </div>
           </nav>
+
           {/*  search bar*/}
           <section>
             <div className='wrapper py-3'>

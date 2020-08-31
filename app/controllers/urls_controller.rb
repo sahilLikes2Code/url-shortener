@@ -7,7 +7,7 @@ class UrlsController < ApplicationController
     if @urls
       render status: :ok, json: {notice: 'Polls list', urls: @urls}
     else
-      render status: :unprocessable_entity, json: {errors: ['nothing found']}
+      render status: :unprocessable_entity, json: {errors: ['no urls found']}
     end
   end
 
@@ -43,10 +43,16 @@ class UrlsController < ApplicationController
   end
 
   def show
+    print 'paramzz'
+    print params
+    print 'paramzz'
     url = Url.find_by_shortened(params[:id])
     if url
       redirect_to url.original
+    else
+      redirect_to root_path
     end
+
   end
 
   private

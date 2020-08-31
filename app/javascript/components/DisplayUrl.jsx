@@ -6,9 +6,6 @@ import thumbtack from '../../assets/images/thumbtack-solid.svg'
 import thumbtackPink from '../../assets/images/thumbtack-pink.svg'
 
 class DisplayUrl extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   pinUrl = async (url) => {
     try {
@@ -25,7 +22,6 @@ class DisplayUrl extends Component {
     try {
       const response = await axios.put(Routes.url_path(url), {url: url}
       )
-      console.log("response", response)
     } catch (error) {
       console.error(error);
     }
@@ -34,7 +30,6 @@ class DisplayUrl extends Component {
 
 
   render() {
-    console.log(this.props)
     const urls = this.props.urls
     const thumbtackStyle = {height: "20px", marginLeft: "10px"}
 
