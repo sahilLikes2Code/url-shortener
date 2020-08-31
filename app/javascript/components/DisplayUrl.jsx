@@ -46,6 +46,7 @@ class DisplayUrl extends Component {
                 className='d-flex justify-content-between bg-navy-blue py-2 border-bottom border-dark '>
               <div className='w-7'>
                 <img onClick={() => this.pinUrl(url.shortened)}
+                     className='thumbtack'
                      src={url.pinned ? thumbtackPink : thumbtack}
                      style={thumbtackStyle}/>
               </div>
@@ -55,6 +56,7 @@ class DisplayUrl extends Component {
               </div>
               <div className='w-40'>
                 <a
+
                   onClick={() => this.increaseClickCount(url.shortened)}
                   className='text-purple'
                   href={`${Routes.hostname()}urls/${url.shortened}`}
