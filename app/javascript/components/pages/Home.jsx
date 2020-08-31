@@ -96,7 +96,7 @@ class Home extends React.Component {
                        name='original'
                        id='original'
                        className='w-75'
-                       placeholder='Enter a URL to shorten'
+                       placeholder='Feed me a URL to shorten'
                        onChange={this.handleChange}/>
                 <button className='w-25 bg-navy-blue text-pink'>Submit
                 </button>
