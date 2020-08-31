@@ -14,16 +14,55 @@
  *= require_self
  */
 
+:root {
+    --pink: #ff79c6;
+    --purple: #bd93f9;
+    --navy-blue: #44475a;
+}
+
 
 .wrapper {
-    max-width: 1000px;
+    /*max-width: 1000px;*/
+    max-width: 80%;
     margin: 0 auto;
 }
 
-/*body {*/
-/*    height: 1500px;*/
-/*}*/
 
-.h1000 {
-    height: 1000px;
+body {
+    background-color: #282a36;
+}
+
+
+.bg-navy-blue {
+    background-color: var(--navy-blue)
+}
+
+.bg-purple {
+    background-color: var(--purple)
+}
+
+
+.text-pink {
+    color: var(--pink);
+}
+
+.text-purple {
+    color: var(--purple);
+}
+
+a:hover {
+    /*color: #282a36;*/
+    color: white;
+}
+
+.w-7 {
+    width: 7%
+}
+
+.w-40 {
+    width: 40%
+}
+
+* {
+    text-align: center;
 }

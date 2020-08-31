@@ -72,12 +72,13 @@ class Home extends React.Component {
     // console.log('props', this.props)
     return (
       <React.Fragment>
-        <div className='bg-secondary h1000'>
+        {/*<div className='bg-secondary mh-800 pb-5'>*/}
+        <div className='pb-5'>
 
           {/*navbar*/}
-          <nav className='bg-white'>
+          <nav className='bg-navy-blue text-pink'>
             <div className='wrapper py-2'>
-              <h1>Sahil</h1>
+              <h1>Url Muncher</h1>
             </div>
           </nav>
 
@@ -94,7 +95,7 @@ class Home extends React.Component {
                        className='w-75'
                        placeholder='Enter a URL to shorten'
                        onChange={this.handleChange}/>
-                <button className='w-25 bg-success'>Submit
+                <button className='w-25 bg-navy-blue text-pink'>Submit
                 </button>
               </form>
             </div>
@@ -103,16 +104,14 @@ class Home extends React.Component {
           {/*  Display shortened links*/}
           <div className='wrapper '>
             <div
-              className='bg-success d-flex justify-content-around align-items-center text-white py-3 mt-3'>
-              <p className='my-0'>Original</p>
-              <p className='my-0'>Shortened</p>
-              {/*<p>Munched</p>*/}
+              className='bg-navy-blue d-flex justify-content-around align-items-center  pl-3 text-white py-3 mt-3 border-bottom border-dark'>
+              <p className='my-0 pl-5 text-pink'>Original</p>
+              <p className='my-0 text-purple'>Shortened</p>
             </div>
             <DisplayUrl urls={this.state.arrayOfUrls}
                         fetchListOfUrls={this.fetchListOfUrls}/>
           </div>
         </div>
-        <button>Click me</button>
       </React.Fragment>
     );
   }

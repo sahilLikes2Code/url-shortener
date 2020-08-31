@@ -3,14 +3,13 @@ class UrlsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    @urls = Url.all
+    @urls = Url.where(pinned: true) + Url.where(pinned: false)
     if @urls
       render status: :ok, json: {notice: 'Polls list', urls: @urls}
     else
       render status: :unprocessable_entity, json: {errors: ['nothing found']}
     end
   end
-
 
   def create
     @url = Url.new(url_params)
@@ -23,9 +22,24 @@ class UrlsController < ApplicationController
     end
   end
 
-  def update
+  # def update
+  #   puts params
+  #   @url = Url.find_by_shortened(params[:url])
+  #   @url.click_count = @url.click_count + 1
+  #   @url.save
+  # end
+
+  def increase_click_count
+    puts 'in click count'
     @url = Url.find_by_shortened(params[:url])
     @url.click_count = @url.click_count + 1
+    @url.save
+  end
+
+  def pin_url
+    puts 'in pin url'
+    @url = Url.find_by_shortened(params[:url])
+    @url.pinned = @url.pinned == false
     @url.save
   end
 

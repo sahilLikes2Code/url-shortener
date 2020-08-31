@@ -15,3 +15,7 @@ export function url_path(id) {
   return `/urls/${id}`;
 }
 
+export function increase_click_count(id) {
+  return `/urls/${id}`;
+}
+
