@@ -98,7 +98,7 @@ class Home extends React.Component {
                        className='w-75'
                        placeholder='Feed me a URL to shorten'
                        onChange={this.handleChange}/>
-                <button className='w-25 bg-navy-blue text-pink height-32px'>Submit
+                <button className='w-25 bg-navy-blue text-pink' style={{height: "302px"}} >Submit
                 </button>
               </form>
             </div>
