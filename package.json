@@ -18,6 +18,9 @@
     "react_ujs": "^2.6.1"
   },
   "version": "0.1.0",
+  "engines": {
+    "node": "16.4.2"
+  },
   "devDependencies": {
     "@webpack-cli/serve": "^1.7.0",
     "webpack-dev-server": "^4.9.3"
